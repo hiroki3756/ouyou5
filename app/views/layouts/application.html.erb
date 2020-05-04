@@ -25,6 +25,14 @@
             <li><%= link_to ' users', users_path, class: 'glyphicon glyphicon-user users' %></li>
             <li><%= link_to ' books', books_path, class: 'glyphicon glyphicon-book books' %></li>
             <li><%= link_to ' logout', destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-log-out logout' %></li>
+            <div class="search-top">
+            <%= form_tag(search_search_path , method: :get) do %>
+              <%= select(@search_cont, :search_method, [["前方一致","forward_match"], ["後方一致","backward_match"], ["完全一致","perfect_match"], ["部分一致","partial_match"]])%>
+              <%= select_tag 'range' ,options_for_select([['---選択してください---', ''], ['User', '1'], ['Book', '2']]) %>
+              <%= text_field(@search_cont, :search_word)%>
+              <%= submit_tag "検索" %>
+            <% end %>
+            </div>
             <% else %>
             <li><%= link_to ' home', root_path, class: 'glyphicon glyphicon-home home' %></li>
             <li><%= link_to ' about', home_about_path, class: 'glyphicon glyphicon-link about' %></li>
@@ -41,6 +49,7 @@
       <p id="notice"><%= notice %></p> <!--デバイスでnotice設定されているので呼び出してるだけ-->
 
     </div>
+    
     <%= yield %>
   </body>
 </html>
